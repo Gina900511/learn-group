@@ -1,0 +1,17 @@
+{
+    "code-runner.executorMap": {
+        "c": "$workspaceRoot/SCM/build.bat $dir $fileName $fileNameWithoutExt"
+        //"c": "cd $dir../SCM && build.bat"
+        //"c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+    },
+    "files.associations": {
+        "list.h": "c",
+        "globallib.hpp": "c",
+        "globaldef.hpp": "c",
+        "xunit.h": "c",
+        "stack.h": "c",
+        "stdio.h": "c",
+        "string.h": "c"
+    }
+
+}
