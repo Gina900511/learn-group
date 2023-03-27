@@ -17,6 +17,7 @@ ECHO [Build-From]:   %dir_caller%
 REM Project
 SET dir_workspace=%~dp0..
 SET dir_dev=%~dp0Develop
+
 REM Make File
 if Not exist %dir_dev% (
     MD %dir_dev%
@@ -42,25 +43,8 @@ REM Target: Library
 ECHO.
 ECHO 2. Build library
 ECHO -----------------------------------
-SET dir_lib=%~dp0..\src
-SET library=
-SET library=%library% %dir_lib%\list.c
-ECHO [lib-build]: list.c
-SET library=%library% %dir_lib%\string.c
-ECHO [lib-build]: string.c
-SET library=%library% %dir_lib%\queue.c
-ECHO [lib-build]: queue.c
-SET library=%library% %dir_lib%\stack.c
-ECHO [lib-build]: stack.c
-
-SET library=%library% %dir_lib%\globalDef.hpp
-ECHO [lib-build]: globalDef.hpp
-SET library=%library% %dir_lib%\globalLib.hpp
-ECHO [lib-build]: globalLib.hpp
-
-SET dir_unitTest=%~dp0..\unitTest
-SET library=%library% %dir_unitTest%\xunit.c
-ECHO [lib-build]: xunit.c
+CALL %~dp0env_clib.bat %~dp0..\src
+SET dependence=%return%
 
 REM Develop of Project
 if %target%==%demo% (
@@ -80,7 +64,7 @@ CD %dir_dev%\%build%
 REM Compile
 ECHO.
 ECHO Building ...
-gcc %tgt_build% %library% -o %tgt_name%
+gcc %tgt_build% %dependence% -o %tgt_name%
 SET errCode=%ERRORLEVEL%
 if %errCode% EQU 0 (
     ECHO.
