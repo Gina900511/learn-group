@@ -4,7 +4,7 @@
 #ifndef XUNIT_H
 #define XUNIT_H
 
-#include "../src/globalDef.hpp"
+#include "../src/lib_c/globalDef.hpp"
 
 #define XUnit(bool) ((bool == 1) ? "Pass" : "Fail")
 

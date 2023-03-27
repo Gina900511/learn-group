@@ -3,7 +3,7 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include "../src/globalDef.hpp"
+#include "globalLib.hpp"
 
 enum SequenceType { Increase = 0, Decrease = 1 };
 enum DirectionType { Vertical = 0, Horizontal = 1 };

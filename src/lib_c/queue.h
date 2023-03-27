@@ -2,7 +2,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "../src/globalDef.hpp"
+#include "globalDef.hpp"
 
 struct Queue {
     int top;
