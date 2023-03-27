@@ -6,71 +6,25 @@ ECHO          [Start To Build]
 ECHO ***********************************
 ECHO.
 
-ECHO 1. Check Arguments
+ECHO * Check Arguments
 ECHO -----------------------------------
-SET dir_caller=%1
+SET str_dir_caller=%1
 SET target=%2
 SET tgt_name=%3
-ECHO [Main-Program]: "%target%"
+
+ECHO [Main-Program]: %target%
+
+SET dir_caller=%str_dir_caller:~1,-2%
 ECHO [Build-From]:   %dir_caller%
 
 REM Project
 SET dir_workspace=%~dp0..
 SET dir_dev=%~dp0Develop
 
-REM Make File
-if Not exist %dir_dev% (
-    MD %dir_dev%
-    ECHO [Make File] ">>>>" Develop
-)
+REM Build C
+CALL %~dp0build_c.bat %dir_dev% %target% %~dp0..\src\Lib_c %dir_caller%\%target% %tgt_name%
+SET errCode=%return%
 
-
-REM ====================================
-REM SET demo=program.c
-REM SET main=main.c
-REM REM Target: Main-Program
-REM SET dir_demo=%~dp0..\demo
-REM SET dir_main=%~dp0..\src
-REM REM Select Build Target
-REM if %target%==%demo% (
-REM     SET tgt_build=%dir_demo%\%demo%
-REM ) else if %target%==%main% (
-REM     SET tgt_build=%dir_main%\%main%
-REM )
-
-
-CALL %~dp0build_c.bat %dir_dev% %target%
-SET dir_buildTo=%return%
-ECHO [Build-To]:     "%dir_buildTo%"
-
-REM Target: Library
-ECHO.
-ECHO 2. Build library
-ECHO -----------------------------------
-REM set c lib
-SET dir_lib=%~dp0..\src\Lib_c
-CALL %~dp0env_clib.bat %dir_lib%
-SET dependence=%return%
-
-REM REM Develop of Project
-REM if %target%==%demo% (
-REM     SET build=demo
-REM ) else if %target%==%main% (
-REM     SET build=debug
-REM )
-REM REM Make File
-REM if Not exist %dir_dev%\%build% (
-REM     MD %dir_dev%\%build%
-REM     ECHO [Make File]: %dir_dev%\%build%
-REM )
-
-CD %dir_buildTo%
-
-REM Compile
-ECHO.
-ECHO Building ...
-gcc %dir_buildTo% %dependence% -o %tgt_name%
-SET errCode=%ERRORLEVEL%
 if %errCode% EQU 0 (
     ECHO.
     ECHO ========= [Build Success] =========
