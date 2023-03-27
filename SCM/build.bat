@@ -43,7 +43,8 @@ REM Target: Library
 ECHO.
 ECHO 2. Build library
 ECHO -----------------------------------
-CALL %~dp0env_clib.bat %~dp0..\src
+SET dir_lib=%~dp0..\src\Lib_c
+CALL %~dp0env_clib.bat %dir_lib%
 SET dependence=%return%
 
 REM Develop of Project

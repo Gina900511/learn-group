@@ -3,7 +3,7 @@
 #ifndef STRING_H
 #define STRING_H
 
-#include "../src/globalDef.hpp"
+#include "globalDef.hpp"
 
 int String_Size(char str[]);
 
