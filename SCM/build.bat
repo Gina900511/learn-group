@@ -53,6 +53,15 @@ ECHO [lib-build]: queue.c
 SET library=%library% %dir_lib%\stack.c
 ECHO [lib-build]: stack.c
 
+SET library=%library% %dir_lib%\globalDef.hpp
+ECHO [lib-build]: globalDef.hpp
+SET library=%library% %dir_lib%\globalLib.hpp
+ECHO [lib-build]: globalLib.hpp
+
+SET dir_unitTest=%~dp0..\unitTest
+SET library=%library% %dir_unitTest%\xunit.c
+ECHO [lib-build]: xunit.c
+
 REM Develop of Project
 if %target%==%demo% (
     SET build=demo
@@ -69,30 +78,80 @@ if Not exist %dir_dev%\%build% (
 CD %dir_dev%\%build%
 
 REM Compile
+ECHO.
+ECHO Building ...
 gcc %tgt_build% %library% -o %tgt_name%
-
-ECHO.
-ECHO ========= [Build Success] =========
-ECHO ***********************************
-ECHO.
-
-ECHO [%target%]: Start
-ECHO -----------------------------------
-ECHO.
-REM Execute the program
-%tgt_name%.exe
-ECHO.
-ECHO -----------------------------------
-
 SET errCode=%ERRORLEVEL%
-SET errStr=
-if %errCode% EQU 0 ( SET errStr=NoError
-) else ( SET errStr=Error)
+if %errCode% EQU 0 (
+    ECHO.
+    ECHO ========= [Build Success] =========
+    ECHO ***********************************
+    ECHO.
+) else (
+    ECHO.
+    ECHO =========  [Build Fail] ===========
+    ECHO ***********************************
+    ECHO.
+    goto :End
+)
 
-ECHO Program Return: %errCode% ( %errStr% )
+ECHO .
+ECHO .
+ECHO .
+
+:Start_Program
+::**************************************
 ECHO.
+ECHO ***********************************
+ECHO            Start Program           
+ECHO ***********************************
+
+ECHO.
+ECHO 1. Arguments
+ECHO -----------------------------------
+ECHO - Null
+ECHO - NUll
+
+ECHO.
+ECHO 2. Main Program [%target%] Log
+ECHO -----------------------------------
+ECHO.
+%tgt_name%.exe
+
+ECHO.
+ECHO.
+ECHO 3. Program Return
+ECHO -----------------------------------
+SET errCode=%ERRORLEVEL%
+ECHO return %errCode%
+
+ECHO.
+ECHO ============= [Stop] ==============
+ECHO ***********************************
+
+if %errCode% EQU 0 (
+    ECHO "[ ----------- Done ------------ ]"
+    ECHO.
+    goto :End
+) else if %errCode% EQU -1073741819 (
+    ECHO.
+    ECHO "[ ----------- Error ----------- ]"
+    ECHO "|> Return Code (-1073741819)"
+    ECHO "|> [Info]: Type Incompatible !!! "
+    ECHO "[ ----------- ***** ----------- ]"
+    ECHO.
+    goto :End
+) else (
+    ECHO.
+    ECHO "[ ----------- Error ----------- ]"
+    ECHO "|> Return Code (%errCode%)"
+    ECHO "|> [Info]: Unknown ... "
+    ECHO "[ ----------- ***** ----------- ]"
+    ECHO.
+    goto :End
+)
+
+:End
+::**************************************
 ECHO * End of run ...
 ECHO.
-
-:end
-

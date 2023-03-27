@@ -5,7 +5,13 @@
         //"c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
     },
     "files.associations": {
-        "list.h": "c"
+        "list.h": "c",
+        "globallib.hpp": "c",
+        "globaldef.hpp": "c",
+        "xunit.h": "c",
+        "stack.h": "c",
+        "stdio.h": "c",
+        "string.h": "c"
     }
 
 }
