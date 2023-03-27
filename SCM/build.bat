@@ -26,46 +26,50 @@ if Not exist %dir_dev% (
 
 
 REM ====================================
-SET demo=program.c
-SET main=main.c
-REM Target: Main-Program
-SET dir_demo=%~dp0..\demo
-SET dir_main=%~dp0..\src
-REM Select Build Target
-if %target%==%demo% (
-    SET tgt_build=%dir_demo%\%demo%
-) else if %target%==%main% (
-    SET tgt_build=%dir_main%\%main%
-)
-ECHO [Build-To]:     "%tgt_build%"
+REM SET demo=program.c
+REM SET main=main.c
+REM REM Target: Main-Program
+REM SET dir_demo=%~dp0..\demo
+REM SET dir_main=%~dp0..\src
+REM REM Select Build Target
+REM if %target%==%demo% (
+REM     SET tgt_build=%dir_demo%\%demo%
+REM ) else if %target%==%main% (
+REM     SET tgt_build=%dir_main%\%main%
+REM )
+
+
+CALL %~dp0build_c.bat %dir_dev% %target%
+SET dir_buildTo=%return%
+ECHO [Build-To]:     "%dir_buildTo%"
 
 REM Target: Library
 ECHO.
 ECHO 2. Build library
 ECHO -----------------------------------
+REM set c lib
 SET dir_lib=%~dp0..\src\Lib_c
 CALL %~dp0env_clib.bat %dir_lib%
 SET dependence=%return%
 
-REM Develop of Project
-if %target%==%demo% (
-    SET build=demo
-) else if %target%==%main% (
-    SET build=debug
-)
+REM REM Develop of Project
+REM if %target%==%demo% (
+REM     SET build=demo
+REM ) else if %target%==%main% (
+REM     SET build=debug
+REM )
+REM REM Make File
+REM if Not exist %dir_dev%\%build% (
+REM     MD %dir_dev%\%build%
+REM     ECHO [Make File]: %dir_dev%\%build%
+REM )
 
-REM Make File
-if Not exist %dir_dev%\%build% (
-    MD %dir_dev%\%build%
-    ECHO [Make File]: %dir_dev%\%build%
-)
-
-CD %dir_dev%\%build%
+CD %dir_buildTo%
 
 REM Compile
 ECHO.
 ECHO Building ...
-gcc %tgt_build% %dependence% -o %tgt_name%
+gcc %dir_buildTo% %dependence% -o %tgt_name%
 SET errCode=%ERRORLEVEL%
 if %errCode% EQU 0 (
     ECHO.
