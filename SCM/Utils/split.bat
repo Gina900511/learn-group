@@ -1,24 +1,29 @@
 @ECHO OFF
-setlocal ENABLEDELAYEDEXPANSION
 
 REM Set a string with an arbitrary number of substrings separated by semi colons
-set teststring=The/rain/in/spain
+SET teststring=The/rain/in/spain
 SET spliter=/
 
 REM Do something with each substring
 :stringLOOP (
     REM Stop when the string is empty
-    if "!teststring!" EQU "" goto END
 
+    setlocal ENABLEDELAYEDEXPANSION
+    if "!teststring!" EQU "" goto :End
     for /f "delims=%spliter%" %%a in ("!teststring!") do (
-        set substring=%%a
+        SET substring=%%a
+        ENDLocal
+        SET return=%%a
     )
         
         REM Do something with the substring - 
         REM we just echo it for the purposes of demo
-        echo !substring!
+        setlocal ENABLEDELAYEDEXPANSION
+        ECHO !substring!
+        ENDLocal
 )
 
+setlocal ENABLEDELAYEDEXPANSION
 REM Now strip off the leading substring
 :striploop (
     set stripchar=!teststring:~0,1!
@@ -29,5 +34,8 @@ REM Now strip off the leading substring
 
     goto :stringLOOP
 )
+ENDLocal
 
-:END
+:End
+
+ECHO Test: %return%
