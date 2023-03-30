@@ -21,8 +21,12 @@ REM Project
 SET dir_workspace=%~dp0..
 SET dir_dev=%~dp0Develop
 
-REM Build C
-CALL %~dp0build_c.bat %dir_dev% %target% %~dp0..\src\Lib_c %dir_caller%\%target% %tgt_name%
+REM REM Build C
+REM CALL %~dp0\For_c\build_c.bat %dir_dev% %target% %~dp0..\src\Lib_c %dir_caller%\%target% %tgt_name%
+REM SET errCode=%return%
+
+REM Build C++
+CALL %~dp0\For_cpp\build_cpp.bat %dir_dev% %target% %~dp0..\src\Lib_cpp %dir_caller%\%target% %tgt_name%
 SET errCode=%return%
 
 if %errCode% EQU 0 (

@@ -1,9 +1,17 @@
 @ECHO Off
 
+REM + 組態設定: 透過配置檔設定組態
+REM + CM: Configuration Manager
+REM ------------------------------------
+CALL %~dp0../Utils/func_iniReader.bat Build CM
+if %ERRORLEVEL% NEQ 0 ( Exit /b 10 )
+if "%return%" NEQ "" ( SET CM=%return% ) else ( SET CM=temp )
+
+
 REM Arguments
 REM ------------------------------------
 REM For Fixed Position For Build-To
-SET dir_dev=%1
+SET dir_buildTo=%1\dev_c\%CM%
 SET target=%2
 
 REM For Lib
@@ -13,34 +21,6 @@ REM For gcc
 SET dir_caller=%4
 SET fname_caller=%5
 
-
-REM - Fixed Position
-REM ------------------------------------
-
-REM Clear All
-SET dir_buildTo=
-SET buildTo=
-
-REM Select Build Target
-
-REM Debug
-if %target%==debug.c (
-    SET buildTo=debug
-
-REM Release
-) else if %target%==main.c (
-    SET buildTo=release
-
-REM Program
-) else if %target%==program.c (
-    SET buildTo=demo
-
-REM Main
-) else if %target%==main.c (
-    SET buildTo=debug
-) 
-
-SET dir_buildTo=%dir_dev%\%buildTo%
 
 REM Make File
 if Not exist %dir_buildTo% (
@@ -67,3 +47,5 @@ gcc %dir_caller% %dependence% -o %fname_caller%
 
 
 SET return=%ERRORLEVEL%
+
+:End
