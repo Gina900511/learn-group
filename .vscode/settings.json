@@ -1,9 +1,24 @@
 {
+    // 執行程式碼按鈕指令
     "code-runner.executorMap": {
-        "c": "$workspaceRoot/SCM/build.bat $dir $fileName $fileNameWithoutExt"
-        //"c": "cd $dir../SCM && build.bat"
-        //"c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+        "c": "$workspaceRoot/SCM/build.bat $dir $fileName $fileNameWithoutExt",
+        "cpp": "$workspaceRoot/SCM/build.bat $dir $fileName $fileNameWithoutExt"
     },
+
+    // 自定義風格
+    "workbench.colorCustomizations": {
+
+        // 活動欄 背景 顏色設定
+        "activityBar.background": "#d023cd6a",
+        // #2179B9      主題: 藍色
+        // #217ab942    主題: 暗藍色
+        // #00ffaa6a    主題: 綠色
+        // #d023cd6a    主題: 暗紫色
+        // #d023236a    主題: 紅色
+        // #1B1F25      主題: 黑灰
+
+    },
+
     "files.associations": {
         "list.h": "c",
         "globallib.hpp": "c",

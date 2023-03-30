@@ -22,7 +22,7 @@ SET library=%library% %dir_lib%\stack.c
 ECHO [lib-build]: stack.c
 
 REM Unit Test:
-SET dir_unitTest=%~dp0..\unitTest
+SET dir_unitTest=%~dp0..\..\unitTest
 SET library=%library% %dir_unitTest%\xunit.c
 ECHO [lib-build]: xunit.c
 
