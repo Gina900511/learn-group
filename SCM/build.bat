@@ -21,13 +21,21 @@ REM Project
 SET dir_workspace=%~dp0..
 SET dir_dev=%~dp0Develop
 
-REM REM Build C
-REM CALL %~dp0\For_c\build_c.bat %dir_dev% %target% %~dp0..\src\Lib_c %dir_caller%\%target% %tgt_name%
-REM SET errCode=%return%
+CALL %~dp0\Utils\func_getFileExt.bat %target%
+SET fileExt=%return%
 
-REM Build C++
-CALL %~dp0\For_cpp\build_cpp.bat %dir_dev% %target% %~dp0..\src\Lib_cpp %dir_caller%\%target% %tgt_name%
-SET errCode=%return%
+SETLocal EnableDelayedExpansion
+if "%fileExt%" EQU "c" (
+    CALL %~dp0\For_c\build_c.bat %dir_dev% %target% %~dp0..\src\Lib_c %dir_caller%\%target% %tgt_name%
+    SET errCode=!return!
+) else if "%fileExt%" EQU "cpp" (
+    CALL %~dp0\For_cpp\build_cpp.bat %dir_dev% %target% %~dp0..\src\Lib_cpp %dir_caller%\%target% %tgt_name%
+    SET errCode=!return!
+) else (
+    REM ECHO File Ext = Folder
+    SET errCode=1
+)
+SETLocal
 
 if %errCode% EQU 0 (
     ECHO.

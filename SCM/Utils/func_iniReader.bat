@@ -65,6 +65,7 @@ Exit /b %Err_CannotFound_Key%
 :End
 ECHO.
 SET return=%value%
+ECHO ============================= [Func End] =============================
 ECHO **********************************************************************
 ECHO return %return%
 ECHO.
