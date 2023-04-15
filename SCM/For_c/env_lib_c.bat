@@ -1,9 +1,12 @@
 @ECHO Off
 
-SET dir_lib=%1
+SET lib_clr=%1
+SET dir_lib=%2
 
 REM Clear All
-SET library=
+if "%lib_clr%" EQU "true" (
+    SET library=
+)
 
 REM Define:
 SET library=%library% %dir_lib%\globalDef.hpp
