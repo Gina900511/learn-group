@@ -1,4 +1,4 @@
-@ECHO 
+@ECHO OFF
 
 REM + 組態設定: 透過配置檔設定組態
 REM + CM: Configuration Manager
@@ -15,7 +15,7 @@ SET dir_buildTo=%1\dev_cpp\%CM%
 SET target=%2
 
 REM For Lib
-SET dir_lib=%3
+SET dir_src=%3
 
 REM For gcc
 SET dir_caller=%4
@@ -34,7 +34,10 @@ ECHO [Build-To]:     %dir_buildTo%
 ECHO.
 ECHO * Linked library
 ECHO -----------------------------------
-CALL %~dp0env_lib_cpp.bat %dir_lib%
+CALL %~dp0env_lib_cpp.bat true %dir_src%\lib_cpp
+REM 暫不支援 C Lib
+REM CALL %~dp0../For_c/env_lib_c.bat false %dir_src%\lib_c
+REM Todo: C & C++ 混合編譯 (靜態連結庫)
 SET dependence=%return%
 
 

@@ -26,7 +26,8 @@
         "xunit.h": "c",
         "stack.h": "c",
         "stdio.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "iostream": "cpp"
     }
 
 }
