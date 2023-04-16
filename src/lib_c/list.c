@@ -3,26 +3,32 @@
 #include <time.h>
 #include "list.h"
 
-void List_Show(int arr[], int size, enum Direction dir) {
+void List_Show(int arr[], int size, enum DirectionType dirType) {
 
     if(arr == NULL) {
         printf("[Warning]: Array is NULL");
         return;
     }
 
-    enum Direction v = Vertical;
-    enum Direction h = Horizontal;
-    
-    if(dir == v) {
-        for (int i = 0; i < size; i++) {
-            printf("Arr[%d] = %d\n", i, arr[i]);
-        }
-    }
-    else if (dir == h) {
-        printf("Arr[]: ");
-        for (int i = 0; i < size; i++) {
-            printf("%d ", arr[i]);
-        }
+    switch (dirType) {
+
+        case Vertical: {
+            for (int i = 0; i < size; i++) {
+                printf("Arr[%d] = %d\n", i, arr[i]);
+            }
+        } break;
+
+        case Horizontal: {
+            printf("Arr[]: ");
+            for (int i = 0; i < size; i++) {
+                printf("%d ", arr[i]);
+            }
+        } break;
+
+        default: {
+            printf("[Warning]: Unknown seqType: %d\n", dirType);
+        } break;
+
     }
 
     puts("\n");
@@ -124,7 +130,6 @@ int List_Find(int arr[], int size, int value) {
     return -1; // Not found
 }
 
-// Undone: 
 int* List_Insert(int arr[], int *size, int idx, int value) {
     int newSize = *size + 1;
     int *brr = List_Create(newSize, 0);
@@ -137,9 +142,10 @@ int* List_Insert(int arr[], int *size, int idx, int value) {
     }
     brr[idx] = value;
     for (int i = idx; i < *size; i++) {
-        brr[i] = arr[i-1];
+        brr[i+1] = arr[i];
     }
 
+    *size = newSize;
     return brr;
 }
 
@@ -158,13 +164,25 @@ int* List_Append(int arr[], int *size, int value) {
     return brr;
 }
 
-int* List_Remove(int arr[], int *size, int value) {
-    int newSize = *size - 1;
-    int *brr = List_Create(newSize, 0);
-    if (brr == NULL) return NULL;
+int* List_Remove_Value(int arr[], int *size, int value) {
 
     int idx = List_Find(arr, *size, value);
     if(idx == -1) return NULL;
+
+    int newSize = *size - 1;
+    int *brr = List_Remove_Index(arr, size, idx);
+    if (brr == NULL) return NULL;
+
+    return brr;
+}
+
+int* List_Remove_Index(int arr[], int *size, int idx) {
+
+    if(idx < 0 || idx >= *size) return NULL;
+
+    int newSize = *size - 1;
+    int *brr = List_Create(newSize, 0);
+    if (brr == NULL) return NULL;
 
     for (int i = 0, j = 0; i < *size; i++, j++) {
         if(i == idx) {
@@ -177,6 +195,51 @@ int* List_Remove(int arr[], int *size, int value) {
     *size = newSize;
     return brr;
 }
+
+int* List_Join(int arr[], int a_size, int brr[], int b_size, int *result_size) {
+    *result_size = a_size + b_size;
+    int *crr = List_Create(*result_size, 0);
+    if (crr == NULL) return NULL;
+
+    int idx = 0;
+
+    for (int i = 0; i < a_size; i++, idx++) {
+        crr[idx] = arr[i];
+    }
+    for (int i = 0; i < b_size; i++, idx++) {
+        crr[idx] = brr[i];
+    }
+
+    return crr;
+}
+
+// ==== Algorithm ======================
+
+void List_Sort_BubbleSort(int arr[], int size, int seqType) {
+    int tmp;
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            switch (seqType) {
+
+                case Increase: {
+                    if(arr[j] >= arr[j+1]) 
+                        SWAP(arr[j], arr[j+1], tmp);
+                } break;
+
+                case Decrease: {
+                    if(arr[j] <= arr[j+1]) 
+                        SWAP(arr[j], arr[j+1], tmp);
+                } break;
+
+                default: {
+                    printf("[Warning]: Unknown seqType: %d\n", seqType);
+                } break;
+
+            }
+        }
+    }
+}
+
 
 // =====================================
 

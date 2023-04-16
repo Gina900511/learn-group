@@ -3,10 +3,12 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include "../src/globalDef.hpp"
+#include "globalLib.hpp"
 
-enum Direction { Vertical = 0, Horizontal = 1 };
-void List_Show(int arr[], int size, enum Direction dir);
+enum SequenceType { Increase = 0, Decrease = 1 };
+enum DirectionType { Vertical = 0, Horizontal = 1 };
+
+void List_Show(int arr[], int size, enum DirectionType dirType);
 
 int* List_Create(int size, int initValue);
 
@@ -38,7 +40,15 @@ int* List_Insert(int arr[], int *size, int idx, int value);
 
 int* List_Append(int arr[], int *size, int value);
 
-int* List_Remove(int arr[], int *size, int value);
+int* List_Remove_Value(int arr[], int *size, int value);
+
+int* List_Remove_Index(int arr[], int *size, int idx);
+
+int* List_Join(int arr[], int a_size, int brr[], int b_size, int *result_size);
+
+// ==== Algorithm ======================
+
+void List_Sort_BubbleSort(int arr[], int size, int seqType);
 
 // =====================================
 
@@ -55,8 +65,6 @@ bool Append(int arr[], int size, int value);
 bool Invert(int arr[], int size);
 
 bool Join(int ori[], int ori_size, int join[], int join_size);
-
-enum SortType { ToMax = 0, ToMin = 1 };
 
 bool Sort(int arr[], int size, int type);
 

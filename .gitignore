@@ -1,7 +1,9 @@
 # Target File
 *.history
-demo/*.c
-SCM/Devdlop/*.c
+src/demo/*
+!src/demo/*.md
+
+SCM/Devdlop
 
 # Prerequisites
 *.d
@@ -55,5 +57,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-
-demo/program.c
